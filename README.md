@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# amm-price-verification
-amm price verification
-=======
 # 使用方法
 
 1. 创建.env文件，写入`ETHEREUM_RPC_URL`
@@ -10,12 +6,9 @@ amm price verification
 4. 对于UniswapV2 Price的测试，使用  `npx hardhat test --grep "UniswapV2 price"`
 
 
-
 # UniswapV2价格机制
 
-UniswapV2于2020年5月上线，继续沿用了常量乘积函数来实现自动兑换的功能，同时在UniswapV1的基础上实现了`ERC20-ERC20`的兑换功能，另外还增加了`Flashswap`。
-
-前文简单回顾了UniswapV1的历史，继续回到常量乘积函数，先来解决两个实际会遇到的数学问题：
+UniswapV2使用常量乘积函数管理流动性，先来解决两个实际会遇到的数学问题：
 
 **1）在常量乘积函数下，如果用户存入Δx 个tokenA，可以兑换出多少个tokenB？**
 
@@ -31,7 +24,7 @@ $$ x\times y = (x+\Delta x)(y-\Delta y)=K $$
 
 UniswapV2会收取交易费率 ρ（0.3%）。交易费属于固定费率，每一笔交易都需要收取。交易费用属于前端收费，即收取Δx × ρ个tokenA作为费用。
 
-**问题1）**已知当前pool的x和y，存入Δx，拟兑出 Δy，常量乘积函数如下：
+问题1）已知当前pool的x和y，存入Δx，拟兑出 Δy，常量乘积函数如下：
 
 $$ x\times y = (x+\Delta x-\rho \Delta x)(y-\Delta y)=K $$
 
@@ -41,7 +34,7 @@ $$ \Delta y = y - \frac {x\times y} {(x+\Delta x-\rho \Delta x)} $$
 
 $$ \Delta y =  \frac {y\times (\Delta x-\rho \Delta x)} {(x+\Delta x-\rho \Delta x)} $$
 
-**问题2）**已知当前pool的x和y，希望兑出Δx，拟存入Δy，常量乘积函数如下：
+问题2）已知当前pool的x和y，希望兑出Δx，拟存入Δy，常量乘积函数如下：
 
 $$ x\times y = (x-\Delta x)(y+\Delta y-\rho \Delta y)=K $$
 
@@ -50,4 +43,3 @@ $$ x\times y = (x-\Delta x)(y+\Delta y-\rho \Delta y)=K $$
 $$ \Delta y = \frac{y - \frac {x\times y} {(x-\Delta x)}}{\rho-1} $$
 
 $$ \Delta y = \frac{y\times \Delta x} {(1-\rho) \times {(x-\Delta x)}} $$
->>>>>>> main
